@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+   <ul>
+       <li><a href="#first">First View</a></li>
+       <li><a href="#second">Second View</a></li>
+       <li><a href="#third">Third View</a></li>
+   </ul>
+
+   <div id="container">
+
+   </div>
+
+    <!-- Libraries -->
+        
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js" type="text/javascript"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js" type="text/javascript"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone-localstorage.js/1.0/backbone.localStorage-min.js" type="text/javascript"></script> 
+
+    <script type="text/javascript">
+
+    var Item=Backbone.Model.extend({
+        name:""
+    });
+
+    var Items=Backbone.Collection.extend({
+        model:Item
+    });
+    
+    var FirstView=Backbone.View.extend({
+        render:function(){
+            this.$el.html("Yunus");
+            return this;
+        }
+    });
+    var SecondView=Backbone.View.extend({
+        render:function(){
+            this.$el.html("Emre");
+            return this;
+        }
+    });
+
+    var ThirdView=Backbone.View.extend({
+        render:function(){
+            this.$el.html("Güneş");
+            return this;
+        }
+    });
+
+    var AppRouter=Backbone.Router.extend({
+        routes:{
+            "first":"first",
+            "second":"second",
+            "third":"third"
+        },
+        first:function(){
+            var view= new FirstView({el:"#container"});
+            view.render();
+        },
+        second:function(){
+            var view= new SecondView({el:"#container"});
+            view.render();
+        },
+        third:function(){
+            var view= new ThirdView({el:"#container"});
+            view.render();
+        }
+    });
+
+    var newRouter=new AppRouter();
+    Backbone.history.start();
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </script>
+</body>
+</html>

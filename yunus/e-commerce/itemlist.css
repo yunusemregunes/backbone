@@ -1,0 +1,218 @@
+*{
+    margin:0%;
+    padding: 0%;
+    text-decoration: none;
+}
+
+body{
+    background: rgb(194, 188, 188);
+}
+.signup{
+    background-color: white;
+    margin-left: 440px;
+    margin-right:440px;
+    margin-top: 100px;
+    height:425px;
+    padding-top: 30px;
+    padding-left: 10px;
+    font-size: 1.3rem;
+    border:1px solid lightgray;
+    border-radius: 7px;
+}
+.signup .signupHeader{
+    font-size: 2rem;
+}
+.signup #name{
+    width:360px;
+    height: 19px;
+    border-radius: 5px;
+    padding-left: 5px;
+}
+.signup .signupButton{
+    width: 367px;
+    height: 34px;
+    border-radius: 5px;
+    background: orange;
+}
+.signup .loginLink{
+    font-size: 1.2rem;
+    padding-left:10px;
+}
+.passwordValidation{
+    font-size:1rem;
+}
+.login{
+    background-color: white;
+    margin-left: 440px;
+    margin-right:440px;
+    margin-top: 100px;
+    height:375px;
+    padding-top: 30px;
+    padding-left: 10px;
+    font-size: 1.3rem;
+    border:1px solid lightgray;
+    border-radius: 7px;
+}
+.login .loginHeader{
+    font-size: 2rem;
+}
+#email{
+    width:360px;
+    height: 19px;
+    border-radius: 5px;
+    padding-left: 5px;
+}
+#password{
+    width:360px;
+    height: 19px;
+    border-radius: 5px;
+    padding-left: 5px;
+
+}
+.login .loginButton{
+    width: 367px;
+    height: 34px;
+    border-radius: 5px;
+    background: orange;
+    
+}
+.loginButton:hover{
+    background-color: rgb(238, 151, 52);
+}
+.login .signuplink{
+    font-size: 1rem;
+    padding-left: 7px;
+}
+.loginValidation{
+    font-size: 1rem;
+    color: red;
+    margin-left: 85px;
+}
+
+.homepage .filter{
+    width: 200px;
+    height: 600px;
+    background-color: white;
+    display: inline-block;
+    float: right;
+    padding: 10px;
+    margin-top: 20px;
+}
+.filter #namefilter{
+    width: 150px;
+}
+.filter .categories{
+    margin-top: 15px;
+}
+
+
+.container{
+
+    text-align: center;
+    margin-left: 325px;
+    margin-right: 325px;
+    height: 55px;
+    padding-top: 30px;
+    font-size: 2rem;
+}
+.container #textInput{
+    width:260px;
+    height: 30px;
+    border-radius: 5px;
+    padding-left: 7px;
+    box-shadow: none;
+}
+
+.container #add-btn{
+
+    height: 30px;
+    width: 60px;
+    border-radius: 5px;
+    background: orange;
+    box-shadow: none;
+}
+.itemlist{
+    margin-top: 20px;
+    background: rgb(194, 188, 188);
+    border-radius: 5px;
+    
+
+}
+.itemlist li{
+    background: white;
+    display: flex;
+    justify-content:space-between;
+    margin-top: 10px;
+    border-bottom:1px solid rgb(95, 87, 87);
+}
+.addcart{
+    display:flex;
+    justify-content: right;
+    
+}
+.addcart .price{
+    padding-right: 10px;
+}
+.addbutton{
+    height: 50px;
+    margin-top: 5px;
+    font-size: 0.7rem;
+}
+.cartbutton{
+    float:right;
+    margin-top: 15px;
+}
+
+.cartContainer{
+    text-align: center;
+    margin-left: 325px;
+    margin-right: 325px;
+    margin-top: 83px;
+    height: 370px;
+    padding-top: 10px;
+    padding-left: 5px;
+    font-size: 2rem;
+    background-color: white;
+    border-radius: 5px;
+}
+.cartContainer .header{
+    text-align: left;
+    display: inline-block;
+    float: left;
+}
+.cartContainer #cartview{
+    font-size: 1rem;
+    margin-top: 31.11px;
+    margin-right: 20px;
+    display: flex;
+    float: right;
+}
+#cartview  .totalPrice{
+    margin-right: 100px;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: stretch;
+}
+#cartview .gotocheckout{
+    margin-top: 5px;
+}
+.cartview{
+    margin-top: 27px;
+    border-radius: 5px;
+    font-size: 1.4rem;
+}
+.cartview li{
+    text-decoration: none;
+    display: flex;
+    justify-content:space-between;
+    margin-top: 10px;
+    border-bottom:1px solid rgb(95, 87, 87);
+
+}
+.cartview li .itemPrice{
+    display: flex;
+    justify-content: stretch;
+}
+#icon{
+    font-size: 20px;
+}

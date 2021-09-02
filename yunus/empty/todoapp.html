@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do App</title>
+</head>
+<style>
+    *{
+        margin:0%;
+        padding: 0%;
+        text-decoration: none;
+    }
+
+    body{
+        background: darkgray;
+    }
+
+    .container{
+        background: lightgray;
+        text-align: center;
+        margin-left: 325px;
+        margin-right: 325px;
+        height: 55px;
+        padding-top: 30px;
+        font-size: 2rem;
+    }
+
+    .todolist{
+        background:lightgray;
+        height:400px;
+    }
+
+    .container #textInput{
+        width:260px;
+        height: 30px;
+        border-radius: 5px;
+        padding-left: 7px;
+        box-shadow: none;
+    }
+
+    .container #add-btn{
+
+        height: 30px;
+        width: 60px;
+        border-radius: 5px;
+        background: orange;
+        box-shadow: none;
+    }
+
+    .todolist{
+        padding-top: 10px;
+    }
+    .todolist li{
+        justify-content: space-around;
+        padding-top: 10px;
+        text-decoration:none;
+        list-style: none;
+    }
+    .donetodo{
+        background:green;
+        text-decoration:line-through;
+
+    }   
+
+</style>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">To Do App </div><br>
+
+        <div id="add">
+            <input id="textInput"type="text">
+            <button id="add-btn"type="submit" >Add</button>
+
+        </div>
+
+        <ul class="todolist">
+
+
+        </ul>
+    
+   </div>
+
+        
+      <!-- Templates -->
+       <script type="text/template" id="item-template">
+
+            
+                <p class="textInput"><%= todo %>
+                <button type="submit" class="donebtn" id="add-btn">Done</button>
+                <button type="submit" class="removebtn" id="add-btn">Remove</button>
+            </p>
+
+        </script>
+
+        <!-- Libraries -->
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js" type="text/javascript"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js" type="text/javascript"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone-localstorage.js/1.0/backbone.localStorage-min.js" type="text/javascript"></script> 
+
+        <script type="text/javascript">
+
+        var toDo=Backbone.Model.extend({
+            defaults:{
+            todo: "",
+            completed: false
+            }
+        });
+        var toDos=Backbone.Collection.extend({
+            model: toDo
+        });
+
+        var toDosList=new toDos();
+
+
+        var toDoView=Backbone.View.extend({
+            model:new toDo(),
+            tagName:"li",
+           
+
+            initialize: function(){
+                this.template=_.template($("#item-template").html());
+            },
+            events: {
+               "click .donebtn":"done",
+                "click .removebtn":"remove"
+
+            },
+           done: function(){
+                console.log(this.$el.attr("complete"));
+                this.model.set("completed", true); 
+                this.render();
+                
+            },
+            remove:function(){
+                this.model.destroy();
+                this.$el.remove();
+                
+            },
+     
+            render: function(){
+                this.$el.html(this.template(this.model.toJSON()));
+                if (this.model.get("completed")) {
+                    this.$el.addClass("donetodo");
+                }
+                return this;
+            }
+        });
+
+        var toDosView=Backbone.View.extend({
+            model: toDosList,
+            el:$(".todolist"),
+          
+
+            initialize: function(){
+                var self=this;
+                this.model.on("add",this.render,this);
+                this.model.on('remove', this.render, this);
+                this.model.on("change",this.render,this);
+                
+            },
+            
+            render: function(){
+                var self=this;
+                this.$el.html("");
+               $(".todolist").empty();
+                _.each(this.model.toArray(),function(toDo){
+                    self.$el.append((new toDoView({model: toDo})).render().$el);
+                });
+                return this;
+            },
+
+            testeventcalled:function(val) {
+                console.error("testeventcalled", val);
+            }
+        });
+
+        var newtoDosView=new toDosView();
+
+        
+
+        $(document).ready(function(){
+            $("#add-btn").click(function(){
+                console.log("You clicked");
+                var newtoDo=new toDo({
+                   todo: $("#textInput").val()
+                   
+                });
+              
+
+
+
+                
+              //  var textInput=$("#textInput").val();
+                //console.log($("#textInput").val());
+                //console.log($("#textInput").val());
+                //$("#textInput").val("");
+                toDosList.add(newtoDo);
+
+            });
+         //   $(".donebtn").click(function(){
+         //       this.destroy();
+          //  });
+
+        
+           
+        });
+         
+        </script>
+</body>
+</html>

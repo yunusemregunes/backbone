@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+   <link rel="stylesheet" type="text/css" href="itemlist.css">
+</head> 
+
+
+    
+<body>
+
+<!--------------------------------------------------->
+    <div class="login">
+
+            <p class="loginHeader">Sign-In</p>
+            <br>
+            <label for="email">E-Mail</label>
+            <br>
+            <input type="email" name="email" id="email"><br><br>
+            <label for="email">Password</label>
+            <br>
+            <input type="password" name="password" id="password"><br><br>
+
+            <div class="loginValidation">
+
+            </div><br>
+
+            <button class="loginButton">Login</button><br><br><br>
+
+            <p>Don't you have an account?    <a href="#" class="signuplink">Create a new account</a></p>
+
+    </div>
+<!--------------------------------------------------->
+
+<div class="signup">
+
+    <p class="signupHeader">Sign-Up</p>
+    <br>
+    <label for="name">Name</label><br>
+    <input type="text" id="name"><br>
+    <label for="E-Mail">E-Mail</label><br>
+    <input type="text" id="email" class="signupEmail"><br>
+    <label for="password">Password</label><br>
+    <input type="text" id="password" class="signuppassword"><br>
+    <label for="password">Re-enter password</label><br>
+    <input type="text" id="password" class="rePassword"><br><br>
+    <div class="passwordValidation">
+
+    </div><br>
+    <button class="signupButton">Create an account</button><br><br>
+
+    <p>Already have an account? <a href="#" class="loginLink">Sign-In</a></p>
+    
+
+
+
+</div>
+<!--------------------------------------------------->
+    <div class="homepage">
+   <!--     <div class="filter" id="filter">
+            <input type="text" id="nameFilter" placeholder="Filter by name">
+
+            <div class="categories">
+                Filter By Categories <br>
+                <input type="checkbox" name="laptops" id="laptops" class="laptopcheckbox">Laptops<br>
+                <input type="checkbox" name="phones" id="phones" class="phonecheckbox">Phones
+            </div>
+        </div>
+-->
+
+<div class="container" id="filter">
+        <br>
+
+        <p id="add">
+            <input class="name"id="textInput"type="text" placeholder="Name">
+            <input class="price"id ="textInput"type="text" placeholder="Price">
+            <button id="add-btn"type="submit" >Add</button>
+        </p>
+
+        <ul class="itemlist">
+
+        </ul>
+        <a href="#cart"><button type="submit" class="cartbutton"id="add-btn">Cart --></button></a>
+</div>
+</div>
+<!--------------------------------------------------->
+
+    <div class="cartContainer">
+        <h2 class="header">Cart</h2>
+        <a href="#"id="cartview" class="destroy">Remove the cart</a>
+        <a href="#"id="cartview" class="continue">Continue to shopping</a>
+        <br>
+        <ul class="cartview">
+
+        </ul>
+
+        
+        
+        <div id="cartview">
+            <div class="totalPrice">
+                <p >Total Price : </p> 
+                <p id="totalPrice"></p>
+            </div>
+          <a href="#" class="gotocheckout">Go to Checkout</a>
+        </div>
+
+    </div>
+<!--------------------------------------------------->
+   
+
+    <!-- Templates -->
+    <script type="text/template" id="item-template">
+        <p class="nameInput"><%= name %></p>    
+        <div class="addcart"> 
+        <p class="priceInput"><%= price %> TL</p>
+        <button type="submit" class="addbutton" id="add-btn">Add to the cart</button>
+        </div> 
+    </script>
+
+    <script type="text/template" id="cart-template">
+
+        <p class="itemName"><%= name %></p>
+        <div class="itemPrice">
+            <p class="itemprice"><%= firstPrice %> TL x</p>
+            <p class="cartCount"><%= cartCount %> piece</p>
+        </div>
+
+        <p class="total"><label for="total">Price : </label><%= price %> TL</p>
+
+        <div>
+            <button class="increase"><i class="fas fa-plus" id="icon"></i></button>
+            <button class="decrease"><i class="fas fa-minus" id="icon"></i></button>
+            <button class="remove"><i class="fas fa-times" id="icon"></i></button>
+        </div>
+    </script>
+
+    <!-- Libraries -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js" type="text/javascript"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js" type="text/javascript"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone-localstorage.js/1.0/backbone.localStorage-min.js" type="text/javascript"></script> 
+        <script type="text/javascript" src="login.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+     <!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.min.js" integrity="sha512-NWNl2ZLgVBoi6lTcMsHgCQyrZVFnSmcaa3zRv0L3aoGXshwoxkGs3esa9zwQHsChGRL4aLDnJjJJeP6MjPX46Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+-->     
+        <script type="text/javascript">
+
+
+    //Backbone Model
+        var Item=Backbone.Model.extend({
+            defaults:{
+                name:"",
+                firstPrice:0,
+                price:0,
+                cartCount:0,
+                categories:""
+            }
+        });
+
+    //Backbone Collection
+        var ItemList=Backbone.Collection.extend({
+            model:Item
+        });
+
+        var itemList=new ItemList();
+
+    //Backbone item view
+        var ItemView=Backbone.View.extend({
+            model:new Item(),
+            tagName:"li",
+
+            initialize:function(){
+                this.template=_.template($("#item-template").html());
+            },
+            events:{
+                "click .addbutton":"addCart"
+            },
+            addCart:function(){
+                var number=this.model.get("cartCount");
+                this.model.set("cartCount",parseInt(number)+1);
+                var newPrice=this.model.get("price");
+                var firstPrice=this.model.get("firstPrice");
+                var cartCount=this.model.get("cartCount");
+                if(parseFloat(cartCount)===1){
+                    this.model.set({"price":parseFloat(firstPrice)});
+                }
+                else{
+                    var totalPrice=parseFloat(newPrice)+parseFloat(firstPrice);
+                    this.model.set({"price": totalPrice});
+            }
+            
+                cartList.add(this.model);
+                //console.log(totalPrice); 
+            },
+            render:function(){
+                this.$el.html(this.template(this.model.toJSON()));
+
+                return this;
+            }
+        });
+
+    // Backbone Items View
+        var ItemsView=Backbone.Model.extend({
+            model: itemList,
+            $el:$(".itemlist"),
+
+            initialize:function(){
+                var self=this;
+                this.model.on("add",this.render,this);
+            },
+            render: function(){
+                var self=this;
+               // this.$el.html("");
+                $(".itemlist").empty();
+                
+
+                _.each(this.model.toArray(),function(Item){
+                    self.$el.append((new ItemView({model: Item})).render().$el);
+                });
+
+                return this;
+            }
+        });
+      
+        var newItemsView=new ItemsView();
+
+        var Router=Backbone.Router.extend({
+            routes:{
+                "cart": "cart"
+            },
+            cart: function(){
+                var example=new ItemsView({el:".cartContainer"});
+                example.render();
+            }
+        });
+
+        var appRouter=new Router();
+       // var subRouter=new appRouter();
+        Backbone.history.start();
+//----------------------------------------------------------------------------------------------------------------
+var cartList=new ItemList();
+
+
+        //Backbone Cart View
+        var CartView=Backbone.View.extend({
+            model: new Item(),
+            tagName:"li",
+
+            initialize: function(){
+               this.cart_template=_.template($("#cart-template").html());
+            },
+            events:{
+                "click .remove":"removeFromCart",
+                "click .decrease":"decrease",
+                "click .increase":"increase",
+                "click .destroy":"destroy"
+            },
+
+            removeFromCart: function(){
+                this.$el.remove();
+                this.model.set("cartCount",0);
+               
+            },
+
+            decrease:function(){
+                var cartCountNumber=this.model.get("cartCount");
+                this.model.set("cartCount",cartCountNumber-1);
+                if(this.model.get("cartCount")<=0){
+                    this.model.set("cartCount",0);
+                    this.$el.hide();
+                }
+                var price=this.model.get("price");
+                var firstPrice=this.model.get("firstPrice");
+                this.model.set("price",parseFloat(price)-parseFloat(firstPrice));
+                console.log(this.model.get("price"));
+
+                this.render();
+            },
+            increase:function(){
+                var cartCountNumber=this.model.get("cartCount");
+                this.model.set("cartCount",cartCountNumber+1);
+                var price=this.model.get("price");
+                var firstPrice=this.model.get("firstPrice");
+                console.error("price", price, 'parse:', parseFloat(price));
+                console.error("price.firstPrice", parseFloat(firstPrice));
+
+                this.model.set("price",parseFloat(price)+parseFloat(firstPrice));
+                this.render();
+                console.log(this.model.get("price"));
+
+            },
+            destroy:function(){
+                cartList.remove();
+                this.render();
+                
+               // $(".gotocheckout").hide();
+            },
+            render: function(){
+                console.log(this.model.get("price"));
+                this.$el.html(this.cart_template(this.model.toJSON()));
+                return this;
+            }
+        });
+
+        //Backbone Cart List View
+        var CartsView=Backbone.View.extend({
+            model: cartList,
+            el:$(".cartview"),
+
+            initialize: function(){
+                this.model.on("add",this.render,this);
+                this.model.on("remove",this.render,this);
+                this.model.on("destroy",this.render,this);
+                
+            },
+            render: function(){
+                var self = this;
+                this.$el.html("");
+                $(".cartview").empty();
+                
+            
+                _.each(this.model.toArray(),function(Item){
+                    self.$el.append((new CartView({model: Item})).render().$el);
+                });
+
+              
+            
+                return this;
+                
+            }
+        });
+
+        var newCartsView= new CartsView();
+//--------------------------------------------------------------------------------
+var newFilteredList= new ItemList();
+        var FilteredListView=Backbone.View.extend({
+    model:new Item(),
+    tagName:"li",
+
+    initialize: function(){
+        this.filtered_template=_.template($("#item-template").html());
+        console.log("laptopfilter");
+    },
+    events: {
+        "click .laptopcheckbox":"laptopFilter",
+        "click .phonecheckbox":"phoneFilter"
+    },
+    laptopFilter: function(){
+        console.log("laptopfilter");
+        
+           ItemList.filter(function(e){
+                if(e.get("categories")==="laptops"){
+                    newFilteredList.add(e);
+                    this.render();
+                }
+            });
+        
+    },
+    render: function(){
+        this.$el.html(this.filtered_template(this.model.toJSON()));
+        return this;
+    }
+});
+
+var FilteredListsView=Backbone.Model.extend({
+    model: newFilteredList,
+    el:$(".itemlist"),
+
+    initialize: function(){
+        var self=this;
+        this.model.on("add",this.render,this);
+    },
+    render: function(){
+        var self=this;
+        this.$el.html("");
+        $(".itemlist").empty();
+
+        _.each(this.model.toArray(),function(Item){
+            self.$el.append((new FilteredListView({model: Item})).render().$el);
+        });
+        return this;
+    }
+
+});
+
+
+        
+//-----------------------------------------------------------------------------------------------------------------
+        $(document).ready(function(){
+            var product1=new Item({
+            name:"Macbook Pro",
+            firstPrice:13999,
+            price:13999,
+            categories:"laptops"
+           });
+         var product2=new Item({
+            name:"Asus",
+            price:7999,
+            categories:"laptops"
+           });
+         var product3=new Item({
+            name:"Dell i7",
+            price:9149,
+            categories:"laptops"
+            });
+          var product4=new Item({
+            name:"Lenovo",
+            price:6049,
+            categories:"laptops"
+          });
+          var product5=new Item({
+            name:"Dell i5",
+            price:6999,
+            categories:"laptops"
+          });
+          var product7=new Item({
+            name:"Iphone 11",
+            price:7999,
+            categories:"Phones"
+          });
+          var product8=new Item({
+            name:"Iphone 12 Pro",
+            price:12500,
+            categories:"Phones"
+          });
+          var product9=new Item({
+            name:"Samsung Galaxy Note 20",
+            price:11500,
+            categories:"Phones"
+          });
+          var product10=new Item({
+            name:"Xiaomi Note 10 Pro",
+            price:7999,
+            categories:"Phones"
+          });
+          var product11=new Item({
+            name:"Iphone 12 Pro Max",
+            price:14500,
+            categories:"Phones"
+          });
+          itemList.add([product1,product2,product3,product4,product5,product7,product8,product9,product10,product11]);
+    
+            $(".homepage").hide();
+            $(".cartContainer").hide();
+            $(".signup").hide();
+
+            
+
+            $(".signuplink").click(function(){
+                $(".login").hide();
+                $(".signup").show();
+            });
+            $(".signupButton").click(function(){
+                var newUser=new User();
+                newUser.set("name",$("#name").val());
+                newUser.set("email",$(".signupEmail").val());
+                if($(".signuppassword").val()===$(".rePassword").val()){
+                    newUser.set("password",$(".rePassword").val()); 
+                    newUserList.add(newUser); 
+                    $(".passwordValidation").css({"color":"green"})
+                    $(".passwordValidation").html("New account is created");
+                   
+                }
+                else{
+                    $(".passwordValidation").css({"color":"red"})
+                    $(".passwordValidation").html("Passwords does not matches");
+                    console.log("Password error");
+                }
+               
+            });
+
+            $(".loginLink").click(function(){
+                $(".login").show();
+                $(".signup").hide();
+            });
+
+            $(".loginButton").click(function(){
+                var count=0;
+
+                newUserList.forEach(function(element){
+                    if(element.get("email")==$("#email").val()&&element.get("password")==$("#password").val()){
+                        console.log("Başarılı");
+                        count++;
+
+                        if(count>0){
+                            $(".login").hide();
+                            $(".homepage").show();
+
+                        }
+                    }
+                    else {
+                        $(".loginValidation").html("E-mail or password is wrong");
+                        
+                    }
+                });
+
+            });
+          
+            $(".cartbutton").click(function(){
+               $(".container").hide();
+                $(".cartContainer").show(); 
+
+                var totalPrice=0;
+                
+                cartList.forEach(function(element){
+                    totalPrice+=parseFloat(element.get("price"));
+                    $("#totalPrice").html(totalPrice + "TL");
+                //    element.render();
+                    (new ItemView({model: element})).render();
+                    // self.$el.append((new ItemView({model: Item})).render().$el);
+                });
+            });
+       
+            $(".continue").click(function(){
+                $(".container").show();
+                $(".cartContainer").hide(); 
+            });
+
+            $("#add-btn").click(function(){
+                
+                console.log("clicked");
+       
+                var newItem= new Item({
+                    name:$(".name").val(),
+                    price:$(".price").val(),
+                    firstPrice:$(".price").val()
+           
+                }); 
+                itemList.add(newItem);
+            });
+           
+
+        });
+
+        </script>
+
+</body>
+</html>
